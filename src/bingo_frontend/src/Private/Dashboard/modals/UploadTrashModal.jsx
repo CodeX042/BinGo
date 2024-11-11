@@ -51,7 +51,9 @@ const TrashUpload = () => {
             },
           }
         );
-        toast.success("Uploaded Trash is classified as " + response.data);
+        toast.success(
+          "Uploaded Trash is classified as " + response.data?.prediction
+        );
       } catch (error) {
         toast.error(error);
       }
