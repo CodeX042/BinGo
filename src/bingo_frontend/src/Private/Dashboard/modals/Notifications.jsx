@@ -6,7 +6,7 @@ import { markAllAsRead } from "../../../Redux/slices/notificationSlice";
 const NotificationDropdown = ({ isDropdownOpen, toggleDropdown }) => {
   const { notifications } = useSelector((state) => state.notification);
   const dispatch = useDispatch();
-  const unreadCount = notifications.length;
+  const unreadCount = notifications?.length;
 
   return (
     <div className="relative">
@@ -44,9 +44,11 @@ const NotificationDropdown = ({ isDropdownOpen, toggleDropdown }) => {
             damping: 25,
           }}
         >
-          <div className="max-h-60 overflow-y-auto">
-            {notifications.length > 0 ? (
-              notifications.map((notification) => (
+          {notifications?.length > 0 ? (
+            notifications
+              .slice()
+              .reverse()
+              .map((notification) => (
                 <div
                   key={notification.id}
                   className="p-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-200 cursor-pointer"
@@ -54,12 +56,12 @@ const NotificationDropdown = ({ isDropdownOpen, toggleDropdown }) => {
                   {notification.message}
                 </div>
               ))
-            ) : (
-              <div className="p-2 text-xs sm:text-sm text-gray-500">
-                No new notifications
-              </div>
-            )}
-          </div>
+          ) : (
+            <div className="p-2 text-xs sm:text-sm text-gray-500">
+              No new notifications
+            </div>
+          )}
+
           {unreadCount > 0 && (
             <button
               className="w-full bg-blue-500 text-white py-2 text-xs sm:text-sm rounded-b-lg"

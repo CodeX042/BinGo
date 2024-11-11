@@ -17,7 +17,7 @@ const Wallet = () => {
       <div className="p-4 sm:p-6 text-center space-y-6 mb-8 text-black">
         <p className="text-gray-500">My BinGo Balance</p>
         <h2 className="flex space-x-4 items-center justify-center text-4xl font-bold text-black mb-2">
-          <span>{showBalance ? `₦${walletBalance}` : "*****"}</span>
+          <span>{showBalance ? `₦${walletBalance.toFixed(2)}` : "*****"}</span>
           <span>
             {showBalance ? (
               <LuEyeOff

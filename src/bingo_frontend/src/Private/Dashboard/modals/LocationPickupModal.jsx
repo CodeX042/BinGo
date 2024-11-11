@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSelectedSection } from "../../../Redux/slices/navigationSlice";
 import { toast } from "react-toastify";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -7,6 +7,8 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css"; // Import Leaflet's CSS
 import { PulseLoader } from "react-spinners";
 import moment from "moment";
+import { addToNotifications } from "../../../Redux/slices/notificationSlice";
+import { newTransaction } from "../../../Redux/slices/transactionSlice";
 
 const LocationPickup = () => {
   const [address, setAddress] = useState("");
@@ -15,6 +17,7 @@ const LocationPickup = () => {
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(false);
   const { trashAmount } = useSelector((state) => state.trash);
+  const { transactionId } = useSelector((state) => state.transaction);
   const dispatch = useDispatch();
 
   // Retrieve location when the checkbox is selected
@@ -56,7 +59,6 @@ const LocationPickup = () => {
     // Proceed if location is available or not enabled
     if (locationEnabled && location) {
       setTimeout(() => {
-        dispatch(withdrawWallet(amount));
         dispatch(
           addToNotifications(
             `Notification sent for pickup, please confirm pickup to get funded`
@@ -64,9 +66,10 @@ const LocationPickup = () => {
         );
         dispatch(
           newTransaction({
-            name: "Funding",
+            id: transactionId + 1,
+            name: "Pick up funding",
             date: moment().format("Do MMM YYYY, h:mm:ss a"),
-            trashAmount,
+            amount: trashAmount,
             status: "Pending",
           })
         );

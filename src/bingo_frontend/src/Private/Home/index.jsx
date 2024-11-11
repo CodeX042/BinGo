@@ -3,6 +3,7 @@ import Banner from "./Banner";
 import HowItWorks from "./HowItWorks";
 import RecyclingSection from "./RecyclingSection";
 import Header from "../../components/Navs/Header";
+import StepCarousel from "./StepCarousel";
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <Header />
       <Banner />
       <HowItWorks />
+      <StepCarousel />
       <RecyclingSection />
     </>
   );

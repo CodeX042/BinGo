@@ -1,5 +1,4 @@
 import React from "react";
-import { BiInfoCircle } from "react-icons/bi";
 
 const SortTrash = () => {
   return (

@@ -24,6 +24,7 @@ const WithdrawModal = () => {
   const [accountName, setAccountName] = useState("");
   const dispatch = useDispatch();
   const { walletBalance } = useSelector((state) => state.wallet);
+  const { transactionId } = useSelector((state) => state.transaction);
 
   const verifyBank = (accountNumber, bankName) => {
     setVerificationError("");
@@ -75,6 +76,7 @@ const WithdrawModal = () => {
           );
           dispatch(
             newTransaction({
+              id: transactionId + 1,
               name: "Withdrawal",
               date: moment().format("Do MMM YYYY, h:mm:ss a"),
               amount,

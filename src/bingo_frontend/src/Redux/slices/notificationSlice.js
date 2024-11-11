@@ -3,11 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   notificationId: 0,
-  notifications: [
-    { id: 1, message: "New pickup request available!" },
-    { id: 2, message: "Your trash upload was successful." },
-    { id: 3, message: "Your request has been confirmed!" },
-  ],
+  notifications: [],
 };
 
 const notificationSlice = createSlice({
@@ -19,8 +15,8 @@ const notificationSlice = createSlice({
       state.notificationId = 0;
     },
     addToNotifications: (state, action) => {
-      state.notifications = state.notifications.push({
-        id: state.notificationId++,
+      state.notifications.push({
+        id: ++state.notificationId,
         message: action.payload,
       });
     },

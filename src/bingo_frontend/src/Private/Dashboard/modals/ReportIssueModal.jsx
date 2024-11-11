@@ -8,6 +8,7 @@ import { PulseLoader } from "react-spinners";
 const ReportIssueModal = ({ onClose }) => {
   const dispatch = useDispatch();
   const [preview, setPreview] = useState(null);
+  const [reportDesc, setReportDesc] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleReport = (e) => {
@@ -66,11 +67,13 @@ const ReportIssueModal = ({ onClose }) => {
         <textarea
           placeholder="Describe the issue"
           className="w-full p-2 mb-4 border rounded h-32"
+          value={reportDesc}
+          onChange={(e) => setReportDesc(e.target.value)}
         />
         <button
           className="bg-black text-white py-3 w-full rounded-lg font-semibold hover:bg-gray-800 transition disabled:opacity-25 disabled:cursor-not-allowed"
           onClick={handleReport}
-          disabled={!preview}
+          disabled={!preview || !reportDesc}
         >
           {loading ? <PulseLoader size={10} color="#fff" /> : "Report"}
         </button>

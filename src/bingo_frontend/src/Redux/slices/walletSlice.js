@@ -10,10 +10,10 @@ const walletSlice = createSlice({
   initialState,
   reducers: {
     fundWallet: (state, action) => {
-      state.walletBalance = walletBalance + action.payload;
+      state.walletBalance = state.walletBalance + Number(action.payload);
     },
     withdrawWallet: (state, action) => {
-      state.walletBalance = walletBalance - action.payload;
+      state.walletBalance = state.walletBalance - Number(action.payload);
     },
   },
 });

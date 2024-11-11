@@ -6,6 +6,8 @@ import { useDropzone } from "react-dropzone";
 import { generateWeightAndAmount } from "../../../helpers";
 import { setTrash } from "../../../Redux/slices/trashSlice";
 import { PulseLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const TrashUpload = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const TrashUpload = () => {
     setLoading(true);
     const generatedTrash = generateWeightAndAmount();
     dispatch(setTrash(generatedTrash));
-    setTimeout(() => {
+    setTimeout(async () => {
       dispatch(setSelectedSection("pickup"));
       setLoading(false);
     }, 3000);
@@ -28,7 +30,7 @@ const TrashUpload = () => {
     dispatch(setSelectedSection("report"));
   };
 
-  const onDrop = (acceptedFiles) => {
+  const onDrop = async (acceptedFiles) => {
     const file = acceptedFiles[0];
     if (file) {
       const reader = new FileReader();
@@ -36,6 +38,23 @@ const TrashUpload = () => {
         setPreview(reader.result);
       };
       reader.readAsDataURL(file);
+
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        const response = await axios.post(
+          "https://bingoml.onrender.com/classify/",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data", // Let Axios handle the content-type for file uploads
+            },
+          }
+        );
+        toast.success("Uploaded Trash is classified as " + response.data);
+      } catch (error) {
+        toast.error(error);
+      }
     }
   };
 

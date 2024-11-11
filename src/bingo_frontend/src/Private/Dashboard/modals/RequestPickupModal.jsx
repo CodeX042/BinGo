@@ -1,10 +1,10 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSelectedSection } from "../../../Redux/slices/navigationSlice";
 
 const RequestPickup = () => {
   const dispatch = useDispatch();
-  const { weight } = useSelector((state) => state.trash);
+  const { trashWeight } = useSelector((state) => state.trash);
 
   const handlePickupRequest = (e) => {
     e.preventDefault();
@@ -14,7 +14,7 @@ const RequestPickup = () => {
   return (
     <div className="max-w-lg w-full sm:min-w-[600px] md:min-w-[800px] lg:min-w-[1000px] bg-white shadow-2xl shadow-gray-900 rounded-lg p-6 sm:p-8 lg:p-10 border border-blue-300">
       <h2 className="text-2xl font-semibold text-center mb-6">
-        Mexa has categorized your trash as paper, weighing {weight} kilograms.
+        Mexa has categorized your trash as paper, weighing {trashWeight} kilograms.
         Please package it and request a pickup from the waste truck.
       </h2>
       <div className="flex justify-center mb-6">

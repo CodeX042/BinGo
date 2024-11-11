@@ -1,59 +1,147 @@
-# `bingo`
 
-Welcome to your new `bingo` project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+# BinGo - Smart Recycling Assistant
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+**BinGo** is a web application that leverages AI to simplify the recycling process. Users can scan and sort garbage, request pickups, and earn rewards—all from a single platform. This app promotes eco-friendly behavior by making recycling easy and rewarding.
 
-To learn more before you start working with `bingo`, see the following documentation available online:
+## Table of Contents
 
-- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
-- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
-- [Motoko Programming Language Guide](https://internetcomputer.org/docs/current/motoko/main/motoko)
-- [Motoko Language Quick Reference](https://internetcomputer.org/docs/current/motoko/main/language-manual)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Running the Project Locally](#running-the-project-locally)
+- [Folder Structure](#folder-structure)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-If you want to start working on your project right away, you might want to try the following commands:
+---
 
-```bash
-cd bingo/
-dfx help
-dfx canister --help
+## Features
+
+1. **Scan & Sort Your Garbage**:
+   - Users can snap a photo of their garbage, and BinGo's AI analyzes the image to identify recyclable items.
+   - The AI instantly categorizes items to help users understand what can and cannot be recycled.
+
+2. **Request a Pickup**:
+   - After sorting their waste, users can request a pickup from nearby recycling centers.
+   - BinGo notifies the nearest recycling center for quick and hassle-free collection.
+
+3. **Get Paid for Recycling**:
+   - Users earn rewards after recyclables are collected and processed.
+   - BinGo tracks the user’s recycling efforts, showing their impact and earnings over time.
+
+## Tech Stack
+
+- **Frontend**: React, React Router, Tailwind CSS, Redux, React Slick for carousel, React Toastify for notifications, Framer Motion for animations
+- **Backend**: Dfinity Internet Computer (ICP) with `@dfinity/agent`, `@dfinity/auth-client` for authentication and secure communication
+- **Other Libraries**: Leaflet for maps, Moment for date formatting, Axios for HTTP requests
+
+## Installation
+
+### Prerequisites
+
+- Node.js and npm
+- Dfinity SDK (for deploying on Internet Computer)
+
+1. Clone the repository:
+
+   ```bash
+   git clone git@github.com:georgegoldman/bingo.git
+   cd bingo
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Initialize Dfinity:
+
+   ```bash
+   dfx start --background
+   dfx deploy
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm start
+   ```
+
+5. Visit the app at `http://localhost:8080`.
+
+## Running the Project Locally
+
+1. **Start the Dfinity Local Network**:
+
+   ```bash
+   dfx start --background
+   ```
+
+2. **Deploy the Canisters**:
+
+   ```bash
+   dfx deploy
+   ```
+
+3. **Run the Frontend Server**:
+
+   ```bash
+   npm start
+   ```
+
+Your application should now be running at `http://localhost:8080`.
+
+## Folder Structure
+
+```
+bingo/
+├── bingo_frontend/                 # Frontend code for Bingo app
+│   ├── src/                        # Source code for the app
+│   │   ├── components/             # Reusable components (carousel, header, etc.)
+│   │   ├── assets/                 # Static assets (images, SVGs)
+│   │   ├── pages/                  # Main app pages (Home, Profile, etc.)
+│   │   ├── store/                  # Redux slices for managing state
+│   │   ├── App.js                  # Main app component
+│   │   ├── index.js                # Entry point for React app
+│   │   └── styles/                 # CSS and styling files
+│   ├── public/                     # Public files (index.html, etc.)
+│   └── package.json                # Project dependencies and scripts
+├── .gitignore                      # Git ignore file
+├── README.md                       # Project documentation
+└── package.json                    # Project dependencies and scripts
+
 ```
 
-## Running the project locally
+## Usage
 
-If you want to test your project locally, you can use the following commands:
+1. **Scan Waste**:
+   - On the homepage, click the "Scan Waste" button.
+   - Use your camera to take a photo or upload an image of your waste.
+   - BinGo’s AI will analyze the image and display recyclable items.
 
-```bash
-# Starts the replica, running in the background
-dfx start --background
+2. **Request Pickup**:
+   - After sorting waste, go to the Pickup section.
+   - Request a pickup, and the app will notify a nearby recycling center.
 
-# Deploys your canisters to the replica and generates your candid interface
-dfx deploy
-```
+3. **Track Earnings**:
+   - View your profile to track rewards, earnings, and your recycling impact over time.
 
-Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
+## Contributing
 
-If you have made changes to your backend canister, you can generate a new candid interface with
+Contributions are welcome! To get started:
 
-```bash
-npm run generate
-```
+1. Fork this repository.
+2. Create a new branch (`git checkout -b feature/YourFeature`).
+3. Commit your changes (`git commit -m 'Add some feature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Open a pull request.
 
-at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
+## License
 
-If you are making frontend changes, you can start a development server with
+This project is licensed under the MIT License.
 
-```bash
-npm start
-```
+---
 
-Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
-
-### Note on frontend environment variables
-
-If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
-
-- set`DFX_NETWORK` to `ic` if you are using Webpack
-- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
-  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
-- Write your own `createActor` constructor
+Enjoy using BinGo, and make a positive impact on the environment by recycling smartly!

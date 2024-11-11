@@ -1,9 +1,15 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fundWallet } from "../../../Redux/slices/walletSlice";
+import { addToNotifications } from "../../../Redux/slices/notificationSlice";
+import { updateTransaction } from "../../../Redux/slices/transactionSlice";
+import { toast } from "react-toastify";
 const TransactionHistory = () => {
   const { transactions } = useSelector((state) => state.transaction);
+  const dispatch = useDispatch();
 
-  const handleConfirm = (id) => {
-    dispatch(fundWallet(trashAmount));
+  const handleConfirm = (id, amount) => {
+    dispatch(fundWallet(amount));
     dispatch(
       addToNotifications(`Pickup confirmed, your wallet has been funded`)
     );
@@ -25,12 +31,12 @@ const TransactionHistory = () => {
             key={transaction.id}
             className="flex flex-col sm:flex-row justify-between items-center py-4"
           >
-            <div className="text-center sm:text-left mb-2 sm:mb-0">
+            <div className="text-left sm:text-left mb-2 sm:mb-0">
               <h3 className="font-semibold">{transaction.name}</h3>
               <p className="text-sm text-gray-500">{transaction.date}</p>
             </div>
-            <div className="text-center sm:text-right">
-              <p className="font-semibold">{transaction.amount}</p>
+            <div className="text-right sm:text-right">
+              <p className="font-semibold">₦{parseInt(transaction?.amount)}</p>
               <div className="flex gap-4">
                 <p
                   className={`text-sm ${
@@ -42,8 +48,10 @@ const TransactionHistory = () => {
                   {transaction.status}
                 </p>
                 <p
-                  className="underline cursor-pointer text-blue-500"
-                  onClick={handleConfirm}
+                  className="underline cursor-pointer text-blue-500 text-sm"
+                  onClick={() =>
+                    handleConfirm(transaction?.id, transaction?.amount)
+                  }
                 >
                   {transaction.status === "Pending" && "Confirm pickup"}
                 </p>

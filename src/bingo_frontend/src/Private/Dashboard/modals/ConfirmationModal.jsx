@@ -1,7 +1,11 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { fundWallet } from "../../../Redux/slices/walletSlice";
 import { updateTransaction } from "../../../Redux/slices/transactionSlice";
+import { setSelectedSection } from "../../../Redux/slices/navigationSlice";
+import { toast } from "react-toastify";
+import { addToNotifications } from "../../../Redux/slices/notificationSlice";
+import { PulseLoader } from "react-spinners";
 
 const ConfirmationPage = () => {
   const { trashAmount } = useSelector((state) => state.trash);
@@ -44,7 +48,7 @@ const ConfirmationPage = () => {
         className="bg-black text-white py-3 w-full rounded-lg font-semibold hover:bg-gray-800 transition disabled:opacity-25 disabled:cursor-not-allowed"
         onClick={handleConfirm}
       >
-        {loading ? <PulseLoader size={10} color="#fff" /> : "Submit"}
+        {loading ? <PulseLoader size={10} color="#fff" /> : "Confirm Pickup"}
       </button>
     </div>
   );

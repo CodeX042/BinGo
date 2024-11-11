@@ -26,7 +26,7 @@ const Header = () => {
       </h1>
 
       {/* Desktop Navigation Links */}
-      <nav className="hidden md:flex space-x-8">
+      {/* <nav className="hidden md:flex space-x-8">
         <a href="#about" className="hover:text-lime-400">
           About
         </a>
@@ -36,7 +36,7 @@ const Header = () => {
         <a href="#earn" className="hover:text-lime-400">
           Earn Now
         </a>
-      </nav>
+      </nav> */}
 
       {/* Desktop Register Button */}
       <button
@@ -56,7 +56,7 @@ const Header = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden absolute top-16 left-0 right-0 bg-black text-center p-6 space-y-4">
-          <a href="#about" className="block hover:text-lime-400">
+          {/* <a href="#about" className="block hover:text-lime-400">
             About
           </a>
           <a href="#contact" className="block hover:text-lime-400">
@@ -64,7 +64,7 @@ const Header = () => {
           </a>
           <a href="#earn" className="block hover:text-lime-400">
             Earn Now
-          </a>
+          </a> */}
           <button className="w-full border border-lime-400 text-lime-400 px-4 py-2 rounded hover:bg-lime-400 hover:text-black transition-all duration-75 ease-linear">
             Login
           </button>
