@@ -1,11 +1,11 @@
 /// <reference types="vitest" />
-import { fileURLToPath, URL } from 'url';
-import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
-import environment from 'vite-plugin-environment';
-import dotenv from 'dotenv';
+import { fileURLToPath, URL } from "url";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import environment from "vite-plugin-environment";
+import dotenv from "dotenv";
 
-dotenv.config({ path: '../../.env' });
+dotenv.config({ path: "../../.env" });
 
 export default defineConfig({
   build: {
@@ -25,6 +25,7 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+    historyApiFallback: true, // Enable SPA routing fallback
   },
   plugins: [
     react(),
@@ -32,16 +33,17 @@ export default defineConfig({
     environment("all", { prefix: "DFX_" }),
   ],
   test: {
-    environment: 'jsdom',
-    setupFiles: 'src/setupTests.js',
+    environment: "jsdom",
+    setupFiles: "src/setupTests.js",
+  },
+  rollupOptions: {
+    external: ["@dfinity/auth-client"],
   },
   resolve: {
     alias: [
       {
         find: "declarations",
-        replacement: fileURLToPath(
-          new URL("../declarations", import.meta.url)
-        ),
+        replacement: fileURLToPath(new URL("../declarations", import.meta.url)),
       },
     ],
   },
